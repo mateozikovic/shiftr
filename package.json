@@ -2,9 +2,10 @@
   "name": "shiftr",
   "version": "1.0.0",
   "description": "app for managing employee shifts",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/mateozikovic/shiftr/issues"
   },
-  "homepage": "https://github.com/mateozikovic/shiftr#readme"
+  "homepage": "https://github.com/mateozikovic/shiftr#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }

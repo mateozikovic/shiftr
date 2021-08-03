@@ -9,7 +9,9 @@ const localStrategy     = require('passport-local').Strategy;
 const bcrypt            = require('bcrypt'); 
 const app               = express();
 
-mongoose.connect("mongodb+srv://abc123:kikiriki@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority",
+require('dotenv').config()
+
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true

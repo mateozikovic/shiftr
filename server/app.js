@@ -11,21 +11,16 @@ const app               = express();
 
 const User = require('./models/user');
 
-require('dotenv').config({path: __dirname + '/.env'})
+require('dotenv').config()
 
+let db_user = process.env.DB_USER;
+let db_pass = process.env.DB_PASS;
 
-// mongoose.connect(`mongodb+srv://${process.env['DB_USER']}:${process.env.DB_PASS}@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
-// {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
-
-mongoose.connect(`mongodb+srv://user1:dvanaest13@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://${db_user}:${db_pass}@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
 
 // Middleware
 app.use(bodyParser.json());

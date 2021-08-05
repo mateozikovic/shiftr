@@ -9,9 +9,18 @@ const localStrategy     = require('passport-local').Strategy;
 const bcrypt            = require('bcrypt'); 
 const app               = express();
 
-require('dotenv').config()
+const User = require('./models/user');
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
+require('dotenv').config({path: __dirname + '/.env'})
+
+
+// mongoose.connect(`mongodb+srv://${process.env['DB_USER']}:${process.env.DB_PASS}@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
+// {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// });
+
+mongoose.connect(`mongodb+srv://user1:dvanaest13@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -66,14 +75,60 @@ function isLoggedIn(req, res, next) {
     res.redirect('/login');
 }
 
+function isLoggedOut(req, res, next) {
+    if (!req.isAuthenticated()) return next();
+    res.redirect('/');
+}
+
 // Routes
 
 app.get('/', isLoggedIn, (req, res) => {
     res.render("index", {title: "Home"});
 });
 
-app.get('/login', (req, res) => {
-    res.render('login', {title: "Login"});
+app.get('/login',isLoggedOut, (req, res) => {
+    let response = {
+        title: "Login",
+        error: req.query.error
+    }
+
+    res.render('login', response);
+});
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/', 
+    failureRedirect: '/login?error=true'
+}));
+
+app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+})
+
+// Setup admin user
+app.get('/setup', async (req, res) => {
+	const exists = await User.exists({ username: "admin" });
+
+	if (exists) {
+		res.redirect('/login');
+		return;
+	};
+
+	bcrypt.genSalt(10, function (err, salt) {
+		if (err) return next(err);
+		bcrypt.hash("pass", salt, function (err, hash) {
+			if (err) return next(err);
+			
+			const newAdmin = new User({
+				username: "admin",
+				password: hash
+			});
+
+			newAdmin.save();
+
+			res.redirect('/login');
+        });
+    });
 });
 
 const port = process.env.PORT || 5000;

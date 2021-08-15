@@ -100,8 +100,40 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 })
 
+app.get('/register', function(req, res) {
+   res.render("register", {title: "Registration"}); 
+});
+
+app.post('/register', async(req, res) => {
+
+    const username = req.body.email;
+    const password = req.body.pass;
+
+    const exists = await User.exists(({username: username}));
+
+    if(exists) req.query.error;
+    
+    bcrypt.genSalt(10, function(err, salt) {
+        if(err) return next(err);
+        bcrypt.hash(password, salt, function(err, hash) {
+            
+            if(err) return next(err);
+
+            const newUser = new User({
+                username: username,
+                password: hash
+            }); 
+
+            newUser.save();
+
+            res.redirect('/login');
+        });
+    });
+})
+
 // Setup admin user
 app.get('/setup', async (req, res) => {
+
 	const exists = await User.exists({ username: "admin" });
 
 	if (exists) {

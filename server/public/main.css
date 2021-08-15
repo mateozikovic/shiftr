@@ -105,3 +105,9 @@ form input[type="submit"] {
     font-weight: 700;
     cursor: pointer;
 }
+
+.signup {
+    color: #fff;
+    padding-top: 20px;
+    text-align: center;
+}

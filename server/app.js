@@ -10,6 +10,7 @@ const bcrypt            = require('bcrypt');
 const app               = express();
 
 const User = require('./models/user');
+const UserInfo =  require('./models/userinfo');
 
 require('dotenv').config()
 
@@ -106,13 +107,21 @@ app.get('/register', function(req, res) {
 
 app.post('/register', async(req, res) => {
 
+    // user.js model
     const username = req.body.email;
     const password = req.body.pass;
 
+
+    //userinfo model
+    const firstName = req.body.first_name;
+    const lastName = req.body.last_name;
+    const companyName = req.body.company;
+    
     const exists = await User.exists(({username: username}));
 
     if(exists) req.query.error;
     
+    // generate salt and save into User collection
     bcrypt.genSalt(10, function(err, salt) {
         if(err) return next(err);
         bcrypt.hash(password, salt, function(err, hash) {
@@ -129,7 +138,20 @@ app.post('/register', async(req, res) => {
             res.redirect('/login');
         });
     });
-})
+
+    // save into UserInfo collection
+    const saveUserInfo = new UserInfo({
+        email: username,
+        firstName: firstName,
+        lastName: lastName,
+        companyName: companyName
+    });
+
+    saveUserInfo.save(function(err, userInfo){
+        if (err) return console.error(err);
+        console.log(userInfo.firstName + " " + userInfo.lastName  + " user saved");   
+    });
+});
 
 // Setup admin user
 app.get('/setup', async (req, res) => {

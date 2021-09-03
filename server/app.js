@@ -9,14 +9,16 @@ const localStrategy     = require('passport-local').Strategy;
 const bcrypt            = require('bcrypt'); 
 const app               = express();
 
-const User = require('./models/user');
-const UserInfo =  require('./models/userinfo');
-
-require('dotenv').config()
-
+// env variables
+require('dotenv').config();
 let db_user = process.env.DB_USER;
 let db_pass = process.env.DB_PASS;
 
+// models
+const User = require('./models/user');
+const UserInfo =  require('./models/userinfo');
+
+// connection
 mongoose.connect(`mongodb+srv://${db_user}:${db_pass}@shiftr.wvvsa.mongodb.net/Shiftr?retryWrites=true&w=majority`,
 {
     useNewUrlParser: true,
@@ -41,7 +43,11 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+//registration file
+let registration = require('./routes/registration');
+app.use('/register', registration);
 
+// Passport.js serialising and deserialising the user
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });
@@ -52,6 +58,7 @@ passport.deserializeUser(function (id, done){
     })
 });
 
+// comparing hash with bcrypt 
 passport.use(new localStrategy(function (username, password, done){
     User.findOne({username: username}, function(err, user){
         if (err) return done(err);
@@ -66,6 +73,7 @@ passport.use(new localStrategy(function (username, password, done){
     });
 }));
 
+// function to check if a user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) return next();
     res.redirect('/login');
@@ -77,7 +85,6 @@ function isLoggedOut(req, res, next) {
 }
 
 // Routes
-
 app.get('/', isLoggedIn, (req, res) => {
     res.render("index", {title: "Home"});
 });
@@ -101,57 +108,57 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-app.get('/register', function(req, res) {
-   res.render("register", {title: "Registration"}); 
-});
+// app.get('/register', function(req, res) {
+//    res.render("register", {title: "Registration"}); 
+// });
 
-app.post('/register', async(req, res) => {
+// app.post('/register', async(req, res) => {
 
-    // user.js model
-    const username = req.body.email;
-    const password = req.body.pass;
+//     // user.js model
+//     const username = req.body.email;
+//     const password = req.body.pass;
 
 
-    //userinfo model
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
-    const companyName = req.body.company;
+//     //userinfo model
+//     const firstName = req.body.first_name;
+//     const lastName = req.body.last_name;
+//     const companyName = req.body.company;
     
-    const exists = await User.exists(({username: username}));
+//     const exists = await User.exists(({username: username}));
 
-    if(exists) req.query.error;
+//     if(exists) req.query.error;
     
-    // generate salt and save into User collection
-    bcrypt.genSalt(10, function(err, salt) {
-        if(err) return next(err);
-        bcrypt.hash(password, salt, function(err, hash) {
+//     // generate salt and save into User collection
+//     bcrypt.genSalt(10, function(err, salt) {
+//         if(err) return next(err);
+//         bcrypt.hash(password, salt, function(err, hash) {
             
-            if(err) return next(err);
+//             if(err) return next(err);
 
-            const newUser = new User({
-                username: username,
-                password: hash
-            }); 
+//             const newUser = new User({
+//                 username: username,
+//                 password: hash
+//             }); 
 
-            newUser.save();
+//             newUser.save();
 
-            res.redirect('/login');
-        });
-    });
+//             res.redirect('/login');
+//         });
+//     });
 
-    // save into UserInfo collection
-    const saveUserInfo = new UserInfo({
-        email: username,
-        firstName: firstName,
-        lastName: lastName,
-        companyName: companyName
-    });
+//     // save into UserInfo collection
+//     const saveUserInfo = new UserInfo({
+//         email: username,
+//         firstName: firstName,
+//         lastName: lastName,
+//         companyName: companyName
+//     });
 
-    saveUserInfo.save(function(err, userInfo){
-        if (err) return console.error(err);
-        console.log(userInfo.firstName + " " + userInfo.lastName  + " user saved");   
-    });
-});
+//     saveUserInfo.save(function(err, userInfo){
+//         if (err) return console.error(err);
+//         console.log(userInfo.firstName + " " + userInfo.lastName  + " user saved");   
+//     });
+// });
 
 // Setup admin user
 app.get('/setup', async (req, res) => {

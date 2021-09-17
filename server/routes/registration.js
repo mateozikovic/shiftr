@@ -1,3 +1,6 @@
+/*
+    Route for registering a new user
+*/
 let express = require('express');
 let router = express.Router();
 let bcrypt = require('bcrypt'); 

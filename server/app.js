@@ -43,9 +43,13 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-//registration file
+//router vars and middleware
 let registration = require('./routes/registration');
 app.use('/register', registration);
+
+let loggedin = require('./routes/loggedinuser');
+app.use('/user', loggedin);
+
 
 // Passport.js serialising and deserialising the user
 passport.serializeUser(function (user, done) {
@@ -73,28 +77,20 @@ passport.use(new localStrategy(function (username, password, done){
     });
 }));
 
-// function to check if a user is logged in
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) return next();
-    res.redirect('/login');
-}
-
-function isLoggedOut(req, res, next) {
-    if (!req.isAuthenticated()) return next();
-    res.redirect('/');
-}
+const isLoggedInFunction = require('./functions');
+const isLoggedOutFunction = require('./functions');
 
 // Routes
-app.get('/', isLoggedIn, (req, res) => {
-    res.render("index", {title: "Home"});
+app.get('/', isLoggedInFunction.isLoggedIn, (req, res) => {
+    res.render("index", {title: req.user.username});
 });
 
-app.get('/login',isLoggedOut, (req, res) => {
+
+app.get('/login',isLoggedOutFunction.isLoggedOut, (req, res) => {
     let response = {
         title: "Login",
         error: req.query.error
     }
-
     res.render('login', response);
 });
 
@@ -106,85 +102,6 @@ app.post('/login', passport.authenticate('local', {
 app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
-});
-
-// app.get('/register', function(req, res) {
-//    res.render("register", {title: "Registration"}); 
-// });
-
-// app.post('/register', async(req, res) => {
-
-//     // user.js model
-//     const username = req.body.email;
-//     const password = req.body.pass;
-
-
-//     //userinfo model
-//     const firstName = req.body.first_name;
-//     const lastName = req.body.last_name;
-//     const companyName = req.body.company;
-    
-//     const exists = await User.exists(({username: username}));
-
-//     if(exists) req.query.error;
-    
-//     // generate salt and save into User collection
-//     bcrypt.genSalt(10, function(err, salt) {
-//         if(err) return next(err);
-//         bcrypt.hash(password, salt, function(err, hash) {
-            
-//             if(err) return next(err);
-
-//             const newUser = new User({
-//                 username: username,
-//                 password: hash
-//             }); 
-
-//             newUser.save();
-
-//             res.redirect('/login');
-//         });
-//     });
-
-//     // save into UserInfo collection
-//     const saveUserInfo = new UserInfo({
-//         email: username,
-//         firstName: firstName,
-//         lastName: lastName,
-//         companyName: companyName
-//     });
-
-//     saveUserInfo.save(function(err, userInfo){
-//         if (err) return console.error(err);
-//         console.log(userInfo.firstName + " " + userInfo.lastName  + " user saved");   
-//     });
-// });
-
-// Setup admin user
-app.get('/setup', async (req, res) => {
-
-	const exists = await User.exists({ username: "admin" });
-
-	if (exists) {
-		res.redirect('/login');
-		return;
-	};
-
-	bcrypt.genSalt(10, function (err, salt) {
-		if (err) return next(err);
-		bcrypt.hash("pass", salt, function (err, hash) {
-			if (err) return next(err);
-			
-			const newAdmin = new User({
-				username: "admin",
-				password: hash
-			});
-
-			newAdmin.save();
-
-			res.redirect('/login');
-        });
-    });
 });
 
 const port = process.env.PORT || 5000;

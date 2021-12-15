@@ -16,7 +16,8 @@ const UserInfoSchema = new mongoose.Schema({
     companyName: {
         type: String,
         required: true
-    }
+    },
+    coworkerList: []
 });
 
 module.exports = mongoose.model("UserInfo", UserInfoSchema);

@@ -17,7 +17,7 @@ const UserInfoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    coworkerList: []
-});
+    coworkers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Coworkers'}]
+}, {timestamps:true});
 
 module.exports = mongoose.model("UserInfo", UserInfoSchema);

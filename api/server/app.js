@@ -104,6 +104,19 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+// search for users and get a list back
+app.get('/userListSearch', isLoggedInFunction.isLoggedIn, function(req, res) {
+    UserInfo.find({$or:[{firstName: "asd"},{lastName:"asd"}]}, function(err, users) {
+        let userMap = {};
+
+        users.forEach(function(user) {
+            userMap[user._id] = user;
+        });
+        
+        res.send(userMap);
+    });
+})
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on ${port}`));

@@ -105,8 +105,10 @@ app.get('/logout', function (req, res) {
 });
 
 // search for users and get a list back
-app.get('/userListSearch', isLoggedInFunction.isLoggedIn, function(req, res) {
-    UserInfo.find({$or:[{firstName: "asd"},{lastName:"asd"}]}, function(err, users) {
+app.get('/userListSearch/:searchvalue', isLoggedInFunction.isLoggedIn, function(req, res) {
+    let searchValue = req.params.searchvalue;
+    
+    UserInfo.find({firstName: searchValue}, function(err, users) {
         let userMap = {};
 
         users.forEach(function(user) {

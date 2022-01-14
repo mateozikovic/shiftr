@@ -10,8 +10,8 @@
    <Sidebar>
      <ul class="sidebar-panel-nav">
        <li><a href="#home">Workweek</a></li>
-       <li><a href="#about">Coworkers</a></li>
-       <li><a href="#contact">About</a></li>
+       <li><a href="#coworkers">Coworkers</a></li>
+       <li><a href="#about">About</a></li>
      </ul>
    </Sidebar>
  </div>
@@ -23,12 +23,14 @@
 <script>
 import Burger from './components/menu/Burger.vue';
 import Sidebar from './components/menu/Sidebar.vue';
+// import Coworkers from './components/Coworkers.vue'
 
 export default {
  name: 'App',
  components: {
    Burger,
-   Sidebar
+   Sidebar,
+//   Coworkers
  }
 }
 </script>

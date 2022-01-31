@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  name: "CoworkerSearch",
   methods: {
     onSubmit() {
       this.$emit('coworker-searched', this.search)

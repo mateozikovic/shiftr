@@ -23,6 +23,14 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  coworkers: {
+    type: Array,
+    required: false,
+  },
+  workweek: {
+    type: Array,
+    requried: false,
+  }
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

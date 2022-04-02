@@ -12,10 +12,18 @@ const User = require("../../models/User");
  * @access Public
  */
 router.post("/register", (req, res) => {
-  let { name, username, email, password, confirm_password } = req.body;
+  let {
+    name,
+    username,
+    email,
+    password,
+    confirm_password,
+    // coworkers,
+    // workweek,
+  } = req.body;
   if (password !== confirm_password) {
     return res.status(400).json({
-      msg: "Password do not match.",
+      msg: "Password's do not match.",
     });
   }
   // Check for the unique Username
@@ -34,7 +42,7 @@ router.post("/register", (req, res) => {
   }).then((user) => {
     if (user) {
       return res.status(400).json({
-        msg: "Email is already registred. Did you forget your password.",
+        msg: "Email is already registred.",
       });
     }
   });
@@ -44,6 +52,8 @@ router.post("/register", (req, res) => {
     username,
     password,
     email,
+    // coworkers,
+    // workweek
   });
 
   // Hash the password
@@ -54,7 +64,7 @@ router.post("/register", (req, res) => {
       newUser.save().then((user) => {
         return res.status(201).json({
           success: true,
-          msg:"User is now registered.",
+          msg: "User is now registered.",
         });
       });
     });
@@ -97,7 +107,7 @@ router.post("/login", (req, res) => {
               success: true,
               token: `Bearer ${token}`,
               user: user,
-              msg: "Hurry! You are now logged in.",
+              msg: "You are now logged in.",
             });
           }
         );

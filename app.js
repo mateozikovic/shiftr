@@ -32,6 +32,10 @@ app.use(cors());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
+// Bring in the Users route
+const users = require('./routes/api/users');
+app.use('/api/users', users);
+
 // Seting up the static directory
 app.use(express.static(path.join(__dirname, "public")));
 

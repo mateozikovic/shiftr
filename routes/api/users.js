@@ -52,8 +52,6 @@ router.post("/register", (req, res) => {
     username,
     password,
     email,
-    // coworkers,
-    // workweek
   });
 
   // Hash the password

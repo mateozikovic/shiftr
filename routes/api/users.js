@@ -16,6 +16,7 @@ router.post("/register", (req, res) => {
     name,
     username,
     email,
+    company,
     password,
     confirm_password,
     // coworkers,
@@ -52,6 +53,7 @@ router.post("/register", (req, res) => {
     username,
     password,
     email,
+    company
   });
 
   // Hash the password

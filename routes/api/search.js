@@ -16,17 +16,21 @@ router.get(
     session: false,
   }),
   (req, res) => {
-    console.log(req.body.name, typeof req.body.name)
-    User.find({ name: { $regex: req.body.name, $options: 'i'}})
-    .then((search) => {
-      if(search) {
-        res.status(200).send(search)
+    // Find users by name, exclude password, workweek and coworkers
+    const searchValue = req.query.name
+    console.log(searchValue, typeof searchValue);
+    User.find(
+      { name: { $regex: searchValue, $options: "i" } },
+      { password: 0, workweek: 0 , coworkers: 0}
+    ).then((search) => {
+      if (search) {
+        res.status(200).send(search);
       } else {
         res.status(400).json({
-          msg: "Cannot return search"
-        })
+          msg: "Cannot return search",
+        });
       }
-    })
+    });
   }
 );
 

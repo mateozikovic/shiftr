@@ -13,7 +13,7 @@
         <div>Username: {{ result.username }}</div>
         <div>Email: {{ result.email }}</div>
         <div>Company: {{ result.company }}</div>
-        <button type="button" class="btn btn-primary btn-lg">
+        <button @click.prevent="addCoworker" type="button" class="btn btn-primary btn-lg">
           Add coworker
         </button>
       </li>
@@ -50,6 +50,13 @@ export default {
         console.log(err);
       }
     },
+    async addCoworker() {
+      try {
+        await axios.post()
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
 };
 </script>

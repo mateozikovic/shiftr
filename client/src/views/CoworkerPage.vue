@@ -13,7 +13,12 @@
         <div>Username: {{ result.username }}</div>
         <div>Email: {{ result.email }}</div>
         <div>Company: {{ result.company }}</div>
-        <button @click.prevent="addCoworker" type="button" class="btn btn-primary btn-lg">
+        <div>{{ result._id }}</div>
+        <button
+          @click.prevent="addCoworker(result._id)"
+          type="button"
+          class="btn btn-primary btn-lg"
+        >
           Add coworker
         </button>
       </li>
@@ -45,18 +50,23 @@ export default {
           }
         );
         this.resultArray = results.data;
-        console.log(this.resultArray);
+        // console.log(this.resultArray);
       } catch (err) {
         console.log(err);
       }
     },
-    async addCoworker() {
+    async addCoworker(idNumber) {
+      /**
+       * send id to server via the button.
+       */
       try {
-        await axios.post()
+        await axios.post("http://localhost:5000/api/search/add", {
+          addedUserId: idNumber,
+        });
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
 };
 </script>

@@ -34,6 +34,32 @@ router.get(
 );
 
 /**
+ * @route GET api/search/coworkerlist
+ * @desc Return a list of all coworkers
+ * @access private
+ */
+
+router.get(
+  "/coworkerlist",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  (req, res) => {
+    let userId = req.user._id;
+    User.find({ _id: userId }, "coworkers").then((list) => {
+      if (list) {
+        res.status(200).send(list[0].coworkers.toObject());
+        console.log(list[0].coworkers.toObject());
+      } else {
+        res.status(400).json({
+          msg: "Cannot return list of users",
+        });
+      }
+    });
+  }
+);
+
+/**
  * @route GET api/search/add
  * @desc Add a coworker to document
  * @access Private
@@ -48,7 +74,7 @@ router.post(
      * and the added coworkers array
      */
     let addedUser = req.body.addedUserId;
-    User.findOne({ _id: addedUser }).then((user) => {0
+    User.findOne({ _id: addedUser }).then((user) => {
       if (user) {
         // update coworkers friends array
         User.findByIdAndUpdate(
@@ -79,6 +105,30 @@ router.post(
         });
       }
     });
+  }
+);
+
+/**
+ * @route POST api/search/deletecoworker
+ * @desc Delete a coworker from the array
+ * @access Private
+ */
+
+router.post(
+  "/deletecoworker",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.body.email);
+    User.findOneAndUpdate(
+      { _id: req.user.id },
+      { $pull: { coworkers: { email: req.body.email } } },
+      { safe: true }
+    )
+      .then((doc) => {
+        console.log(doc);
+        res.status(200);
+      })
+      .catch((err) => console.log(err));
   }
 );
 

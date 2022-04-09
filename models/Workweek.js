@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const WorkWeekSchema = new mongoose.Schema({
+const WorkweekSchema = new mongoose.Schema({
     weekName: {
         type: String,
         required: true
     },
     workers: [],
-    
     monday: [{
         workerName: String,
         shift: String
@@ -44,4 +43,4 @@ const WorkWeekSchema = new mongoose.Schema({
     ]
 })
 
-module.exports = mongoose.model("WorkWeek", WorkWeekSchema);
+module.exports = mongoose.model("workweeks", WorkweekSchema);

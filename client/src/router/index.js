@@ -6,37 +6,48 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView
+    component: HomeView,
   },
   {
     path: "/login",
     name: "login",
     component: () => import("../views/LoginPage.vue"),
     meta: {
-      requiresGuest: true
-    }
+      requiresGuest: true,
+    },
   },
   {
     path: "/register",
     name: "register",
     component: () => import("../views/RegisterPage.vue"),
     meta: {
-      requiresGuest: true
-    }
+      requiresGuest: true,
+    },
   },
   {
     path: "/profile",
     name: "profile",
     component: () => import("../views/ProfilePage.vue"),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/coworkers",
     name: "coworkers",
     component: () => import("../views/CoworkerPage.vue"),
-  }
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/workweek",
+    name: "workweek",
+    component: () => import("../views/WorkweekPage.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
 ];
 
 const router = createRouter({
@@ -45,22 +56,22 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {
       // Redirect to the Login Page
-      next('/login');
+      next("/login");
     } else {
       next();
     }
-  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+  } else if (to.matched.some((record) => record.meta.requiresGuest)) {
     if (store.getters.isLoggedIn) {
       // Redirect to the Login Page
-      next('/profile');
+      next("/profile");
     } else {
       next();
     }
   } else {
-    next()
+    next();
   }
 });
 

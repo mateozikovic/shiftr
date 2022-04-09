@@ -31,10 +31,7 @@ const UserSchema = new Schema({
     type: Array,
     required: false,
   },
-  workweek: {
-    type: Array,
-    requried: false,
-  }
+  workweek: [{type: Schema.Types.ObjectId, ref: 'Workweek'}]
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

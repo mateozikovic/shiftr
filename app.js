@@ -35,8 +35,11 @@ require("./config/passport")(passport);
 // Bring in the Users route
 const users = require('./routes/api/users');
 const search = require('./routes/api/search');
+const workweek = require('./routes/api/workweek');
 app.use('/api/users', users);
 app.use('/api/search', search);
+app.use('/api/workweek', workweek);
+
 
 // Seting up the static directory
 app.use(express.static(path.join(__dirname, "public")));

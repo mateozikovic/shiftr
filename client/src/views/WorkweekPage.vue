@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped>
-.workweek-list{
-    list-style: none;
+.workweek-list {
+  list-style: none;
 }
 </style>

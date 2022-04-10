@@ -16,6 +16,7 @@
             <h5 class="modal-title" id="staticBackdropLabel">
               Create a new workweek
             </h5>
+
             <button
               type="button"
               class="btn-close"
@@ -23,44 +24,44 @@
               aria-label="Close"
             ></button>
           </div>
+
           <div class="modal-body">
             <!-- Modal dialog body  -->
-            <form @submit.prevent="nextWindow()">
-              <label for="workweekName">Name your workweek</label>
-              <input
-                type="text"
-                name="workweekName"
-                id="workweekName "
-                placeholder="enter a name.."
-                v-model="workweekName"
-              />
-              <h3>select workers for this week</h3>
-              <ul class="list-group">
-                <li
-                  class="list-group-item"
-                  v-for="coworker in coworkersArray"
-                  :key="coworker.id"
-                >
-                  <div>
-                    {{ coworker.name }}
-                    <input
-                      class="cb"
-                      type="checkbox"
-                      id="coworker._id"
-                      name="selected"
-                      :value="coworker"
-                      v-bind="coworker"
-                      v-model="selectedWorkers"
-                    />
-                  </div>
-                </li>
-              </ul>
-              <div class="modal-footer">
+            <div v-if="showForm">
+              <form @submit.prevent="nextButton">
+                <label for="workweekName">Name your workweek</label>
+                <input
+                  type="text"
+                  name="workweekName"
+                  id="workweekName "
+                  placeholder="enter a name.."
+                  v-model="workweekName"
+                />
+                <h3>select workers for this week</h3>
+                <ul class="list-group">
+                  <li
+                    class="list-group-item"
+                    v-for="(coworker, index) in coworkersArray"
+                    :key="index"
+                  >
+                    <div>
+                      {{ coworker.name }}
+                      <input
+                        class="cb"
+                        type="checkbox"
+                        id="coworker._id"
+                        name="selected"
+                        :value="coworker"
+                        v-model="selectedWorkers"
+                      />
+                    </div>
+                  </li>
+                </ul>
                 <button class="btn btn-primary">next</button>
-              </div>
-            </form>
-
+              </form>
+            </div>
             <add-shift
+              v-if="showList"
               :workweek-name="workweekName"
               :selected-workers="selectedWorkers"
             ></add-shift>
@@ -96,6 +97,8 @@ export default {
   },
   data() {
     return {
+      showList: false,
+      showForm: true,
       workweekName: "",
       coworkersArray: [],
       selectedWorkers: [],
@@ -113,6 +116,10 @@ export default {
       console.log(this.workweekName);
       console.log(this.selectedWorkers);
     },
+    nextButton() {
+      this.showList = true;
+      this.showForm = false;
+    },
   },
   created() {
     this.getCoworkerList();
@@ -121,6 +128,10 @@ export default {
 </script>
 
 <style scoped>
+button.btn {
+  margin: 5px;
+}
+
 .card {
   margin: 25px;
 }

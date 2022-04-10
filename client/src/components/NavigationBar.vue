@@ -27,6 +27,9 @@
           <router-link to="/register" class="nav-link">Register</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedIn">
+          <router-link to="/workweek" class="nav-link">Workweeks</router-link>
+        </li>
+        <li class="nav-item" v-if="isLoggedIn">
           <router-link to="/profile" class="nav-link">Profile</router-link>
         </li>
         <li class="nav-item" v-if="isLoggedIn">
@@ -35,9 +38,7 @@
         <li class="nav-item" v-if="isLoggedIn">
           <a to="/logout" class="nav-link" @click.prevent="logoutUser">Logout</a>
         </li>
-        <li class="nav-item" v-if="isLoggedIn">
-          <router-link to="/workweek" class="nav-link">Workweeks</router-link>
-        </li>
+        
         </ul>
       </div>
     </div>

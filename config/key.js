@@ -2,7 +2,7 @@
 require("dotenv").config();
 let db_user = process.env.DB_USER;
 let db_pass = process.env.DB_PASS;
-let key = process.env.SECRET_KEY;
+let key = "secretkey";
 
 // Export db connection URL and secret key
 module.exports = {

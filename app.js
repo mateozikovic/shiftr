@@ -21,6 +21,9 @@ mongoose
     console.log("Unable to connect with the database!", err);
   });
 
+// Seting up the static directory
+app.use(express.static(path.join(__dirname, "public")));
+
 // Middleware
 app.use(
   bodyParser.urlencoded({
@@ -44,8 +47,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 })
 
-// Seting up the static directory
-app.use(express.static(path.join(__dirname, "public")));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on ${port}`));

@@ -40,13 +40,13 @@ export default {
     ...mapActions(["getProfile"]),
     async getCoworkerList() {
       await axios
-        .get("http://localhost:5000/api/search/coworkerlist")
+        .get("/api/search/coworkerlist")
         .then((response) => {
           this.coworkersArray = response.data;
         });
     },
     deleteCoworker(cowId) {
-      axios.post("http://localhost:5000/api/search/deletecoworker", {coworkerId: cowId})
+      axios.post("/api/search/deletecoworker", {coworkerId: cowId})
       this.getCoworkerList();
     }
   },

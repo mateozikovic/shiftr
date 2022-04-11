@@ -70,31 +70,30 @@
         </div>
       </div>
     </div>
-    <div class="card" style="width: 18rem">
-      <div class="card-body">
-        <h5 class="card-title">Hi there!</h5>
-        <!-- Button trigger modal -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          create a workweek
-        </button>
-      </div>
-    </div>
+
+    <h5 class="card-title">Hi there!</h5>
+    <!-- Button trigger modal -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+    >
+      create a workweek
+    </button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import AddShift from "./AddShift.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     AddShift,
   },
+  computed: mapGetters(["user"]),
   data() {
     return {
       showList: false,
@@ -105,7 +104,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["getProfile"]),
     async getCoworkerList() {
+      console.log(this.user)
       await axios
         .get("http://localhost:5000/api/search/coworkerlist")
         .then((response) => {
@@ -120,9 +121,14 @@ export default {
       this.showList = true;
       this.showForm = false;
     },
+    pushUserToWorkerList() {
+      this.selectedWorkers.push(this.user);
+    },
   },
   created() {
     this.getCoworkerList();
+    this.getProfile();
+    this.pushUserToWorkerList();
   },
 };
 </script>
@@ -152,5 +158,9 @@ input.cb {
 
 h3 {
   margin: 5px;
+}
+
+h5 {
+  margin-top: 25px;
 }
 </style>

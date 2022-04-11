@@ -133,16 +133,6 @@ export default {
       } catch (err) {
         console.log(err);
       }
-
-      console.log(this.monday)
-      console.log(this.tuesday)
-      console.log(this.wednesday)
-      console.log(this.thursday)
-      console.log(this.friday)
-      console.log(this.saturday)
-      console.log(this.sunday)
-
-      console.log("YEAH");
     },
     initArray() {
       for(let i = 0; i < this.selectedWorkers.length; i++){

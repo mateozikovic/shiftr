@@ -46,5 +46,28 @@ router.post(
     });
   }
 );
+/**
+ * @route GET api/workweek/returnall
+ * @desc return workweeks
+ * @access private
+ */
+
+router.get(
+  "/returnall",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const user = String(req.user._id);
+
+    await Workweek.find({"workers._id": user}).then((result) => {
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(400).json({
+          msg: "Can't return workweek",
+        });
+      }
+    });
+  }
+);
 
 module.exports = router;

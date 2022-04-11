@@ -3,6 +3,7 @@
     <ul class="workweek-list">
       <li>
         <workweek-box></workweek-box>
+        <workweek-modal></workweek-modal>
       </li>
     </ul>
   </div>
@@ -10,9 +11,11 @@
 
 <script>
 import WorkweekBox from "../components/UI/WorkweekBox.vue";
+import WorkweekModal from "../components/UI/WorkweekModal.vue"
 export default {
   components: {
     WorkweekBox,
+    WorkweekModal
   },
 };
 </script>

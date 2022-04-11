@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h2>Register</h2>
+    
     <div class="row">
       <div class="card mx-auto">
-        <div class="card-header text-white bg-primary">
+        <div class="card-header ">
           <h4>Register</h4>
         </div>
         <div class="card-body">

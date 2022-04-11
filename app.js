@@ -40,6 +40,9 @@ app.use('/api/users', users);
 app.use('/api/search', search);
 app.use('/api/workweek', workweek);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+})
 
 // Seting up the static directory
 app.use(express.static(path.join(__dirname, "public")));

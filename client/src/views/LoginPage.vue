@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="card mx-auto">
-        <div class="card-header text-white bg-primary">
+        <div class="card-header">
           <h4>Login</h4>
         </div>
         <div class="card-body">

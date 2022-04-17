@@ -98,7 +98,7 @@ export default {
   methods: {
     async getWorkWeeks() {
       await axios
-        .get("/api/workweek/returnall")
+        .get("http://localhost:5000/api/workweek/returnall")
         .then((results) => {
           try {
             results.data.forEach((element) => this.workWeeks.push(element));

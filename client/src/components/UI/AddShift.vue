@@ -119,7 +119,7 @@ export default {
   methods: {
     async createWorkweek() {
       try {
-        await axios.post("/api/workweek/create", {
+        await axios.post("http://localhost:5000/api/workweek/create", {
           weekName: this.workweekName,
           workers: this.selectedWorkers,
           monday: this.monday,

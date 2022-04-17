@@ -108,7 +108,7 @@ export default {
     async getCoworkerList() {
       console.log(this.user)
       await axios
-        .get("/api/search/coworkerlist")
+        .get("http://localhost:5000/api/search/coworkerlist")
         .then((response) => {
           this.coworkersArray = response.data;
         });

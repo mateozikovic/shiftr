@@ -42,7 +42,7 @@ export default {
     async searchCoworker(searchInput) {
       try {
         let results = await axios.get(
-          "/api/search/coworker",
+          "http://localhost:5000/api/search/coworker",
           {
             params: {
               name: searchInput,
@@ -60,7 +60,7 @@ export default {
        * send id to server via the button.
        */
       try {
-        await axios.post("/api/search/add", {
+        await axios.post("http://localhost:5000/api/search/add", {
           addedUserId: idNumber,
         });
       } catch (err) {

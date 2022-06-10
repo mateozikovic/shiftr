@@ -29,6 +29,9 @@
 <script>
 import SearchBar from "../components/UI/SearchBar.vue";
 import axios from "axios";
+
+import { mapActions } from "vuex";
+
 export default {
   components: {
     SearchBar,
@@ -39,6 +42,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions["search"],
+
     async searchCoworker(searchInput) {
       try {
         let results = await axios.get(
@@ -60,7 +65,7 @@ export default {
        * send id to server via the button.
        */
       try {
-        await axios.post("http://localhost:5000/api/search/add", {
+        await axios.post("http://localhost:5000get/api/search/add", {
           addedUserId: idNumber,
         });
       } catch (err) {

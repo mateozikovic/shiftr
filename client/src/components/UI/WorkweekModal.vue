@@ -10,7 +10,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+              data-bs-target="#exampleModal"  
             >
               Look at shifts
             </button>
@@ -25,7 +25,7 @@
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
@@ -33,36 +33,34 @@
                 </h5>
               </div>
               <div class="modal-body">
-                <ul>
-                  <h4>Monday</h4>
-                  <li v-for="(mon, index) in week.monday" :key="index">
-                    {{ mon.workerName }} - Shift: {{ mon.shift }}
-                  </li>
-                  <h4>Tuesday</h4>
-                  <li v-for="(tue, index) in week.tuesday" :key="index">
-                    {{ tue.workerName }} - Shift: {{ tue.shift }}
-                  </li>
-                  <h4>Wednesday</h4>
-                  <li v-for="(wed, index) in week.wednesday" :key="index">
-                    {{ wed.workerName }} - Shift: {{ wed.shift }}
-                  </li>
-                  <h4>Thursday</h4>
-                  <li v-for="(thu, index) in week.thursday" :key="index">
-                    {{ thu.workerName }} - Shift: {{ thu.shift }}
-                  </li>
-                  <h4>Friday</h4>
-                  <li v-for="(fri, index) in week.friday" :key="index">
-                    {{ fri.workerName }} - Shift: {{ fri.shift }}
-                  </li>
-                  <h4>Saturday</h4>
-                  <li v-for="(sat, index) in week.saturday" :key="index">
-                    {{ sat.workerName }} - Shift: {{ sat.shift }}
-                  </li>
-                  <h4>Sunday</h4>
-                  <li v-for="(sun, index) in week.sunday" :key="index">
-                    {{ sun.workerName }} - Shift: {{ sun.shift }}
-                  </li>
-                </ul>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">name</th>
+                      <th scope="col">Monday</th>
+                      <th scope="col">Tuesday</th>
+                      <th scope="col">Wednesday</th>
+                      <th scope="col">Thursday</th>
+                      <th scope="col">Friday</th>
+                      <th scope="col">Saturday</th>
+                      <th scope="col">Sunday</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(mon, index) in week.monday" :key="index">
+                      <td>
+                        {{ mon.workerName }}
+                      </td>
+                      <td>{{ mon.shift }}</td> 
+                      <td>{{ week.tuesday[index].shift }}</td>
+                      <td>{{ week.wednesday[index].shift }}</td>
+                      <td>{{ week.thursday[index].shift }}</td>
+                      <td>{{ week.friday[index].shift }}</td>
+                      <td>{{ week.saturday[index].shift }}</td>
+                      <td>{{ week.sunday[index].shift }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <div class="modal-footer">
                 <button
@@ -87,7 +85,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -98,7 +95,7 @@ export default {
   methods: {
     async getWorkWeeks() {
       await axios
-        .get("/api/workweek/returnall")
+        .get("http://localhost:5000/api/workweek/returnall")
         .then((results) => {
           try {
             results.data.forEach((element) => this.workWeeks.push(element));

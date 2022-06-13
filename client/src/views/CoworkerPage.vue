@@ -13,7 +13,6 @@
         <div>Username: {{ result.username }}</div>
         <div>Email: {{ result.email }}</div>
         <div>Company: {{ result.company }}</div>
-        <div>{{ result._id }}</div>
         <button
           @click.prevent="addCoworker(result._id)"
           type="button"

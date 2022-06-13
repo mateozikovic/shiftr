@@ -10,7 +10,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+              data-bs-target="#exampleModal"  
             >
               Look at shifts
             </button>
@@ -33,37 +33,6 @@
                 </h5>
               </div>
               <div class="modal-body">
-                <!-- <ul>
-                  <h4>Monday</h4>
-                  <li v-for="(mon, index) in week.monday" :key="index">
-                    {{ mon.workerName }} - Shift: {{ mon.shift }}
-                  </li>
-                  <h4>Tuesday</h4>
-                  <li v-for="(tue, index) in week.tuesday" :key="index">
-                    {{ tue.workerName }} - Shift: {{ tue.shift }}
-                  </li>
-                  <h4>Wednesday</h4>
-                  <li v-for="(wed, index) in week.wednesday" :key="index">
-                    {{ wed.workerName }} - Shift: {{ wed.shift }}
-                  </li>
-                  <h4>Thursday</h4>
-                  <li v-for="(thu, index) in week.thursday" :key="index">
-                    {{ thu.workerName }} - Shift: {{ thu.shift }}
-                  </li>
-                  <h4>Friday</h4>
-                  <li v-for="(fri, index) in week.friday" :key="index">
-                    {{ fri.workerName }} - Shift: {{ fri.shift }}
-                  </li>
-                  <h4>Saturday</h4>
-                  <li v-for="(sat, index) in week.saturday" :key="index">
-                    {{ sat.workerName }} - Shift: {{ sat.shift }}
-                  </li>
-                  <h4>Sunday</h4>
-                  <li v-for="(sun, index) in week.sunday" :key="index">
-                    {{ sun.workerName }} - Shift: {{ sun.shift }}
-                  </li>
-                </ul> -->
-
                 <table class="table table-hover">
                   <thead>
                     <tr>

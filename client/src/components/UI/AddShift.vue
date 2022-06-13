@@ -3,6 +3,7 @@
     <h2>{{ workweekName }}</h2>
     <div>enter shift hours:</div>
     <form @submit.prevent="createWorkweek">
+    <div class="worker-name">Enter your hours</div>
       <ul v-for="(workers, index) in selectedWorkers" :key="index">
         <li>
           <div class="worker-name">{{ workers.name }}</div>
@@ -113,7 +114,7 @@ export default {
       thursday: [],
       friday: [],
       saturday: [],
-      sunday: []
+      sunday: [],
     };
   },
   methods: {
@@ -128,70 +129,70 @@ export default {
           thursday: this.thursday,
           friday: this.friday,
           saturday: this.saturday,
-          sunday: this.sunday
+          sunday: this.sunday,
         });
       } catch (err) {
         console.log(err);
       }
     },
     initArray() {
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.monday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.tuesday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.wednesday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.thursday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.friday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.saturday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      for(let i = 0; i < this.selectedWorkers.length; i++){
+      for (let i = 0; i < this.selectedWorkers.length; i++) {
         this.sunday.push({
           workerName: this.selectedWorkers[i].name,
-          shift: ""
-        })
+          shift: "",
+        });
       }
-      console.log(this.monday)
-      console.log(this.tuesday)
-      console.log(this.wednesday)
-      console.log(this.thursday)
-      console.log(this.friday)
-      console.log(this.saturday)
-      console.log(this.sunday)
-    }
+      console.log(this.monday);
+      console.log(this.tuesday);
+      console.log(this.wednesday);
+      console.log(this.thursday);
+      console.log(this.friday);
+      console.log(this.saturday);
+      console.log(this.sunday);
+    },
   },
   created() {
     console.log(this.workweekName);
     console.log(this.selectedWorkers);
 
     this.initArray();
-  }
+  },
 };
 </script>
 
